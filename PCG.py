@@ -3,15 +3,15 @@ import time
 import math
 
 
-def preconditioned_conjugate_gradient(A: np.ndarray, b: np.ndarray, preconditioner_fun, max_iterations=10000, tol=1e-6) -> np.ndarray:
+def preconditioned_conjugate_gradient(A: np.ndarray, b: np.ndarray, preconditioner_func, max_iterations=10000, tol=1e-6) -> np.ndarray:
     """
     Solve Ax = b using the preconditioned conjugate gradient method.
     Use CG in M-inner product
     :param M: preconditioner
     """
-    start_time = time.time()
+    start_time = time.perf_counter()
 
-    C_first_column = preconditioner_fun(A)
+    C_first_column = preconditioner_func(A)
     D_inv = 1 / np.fft.fft(C_first_column)
 
     x = np.zeros_like(b, dtype=np.float64)
@@ -30,7 +30,7 @@ def preconditioned_conjugate_gradient(A: np.ndarray, b: np.ndarray, precondition
         r_new = r - alpha * q
         if np.linalg.norm(r_new) / r0_norm < tol:
             print("Number of iterations:", j + 1)
-            print("Elapsed time:", time.time() - start_time, "s")
+            print("Elapsed time:", time.perf_counter() - start_time, "s")
             return x
         # Solve Mz = r
         z_new = np.fft.ifft(D_inv * np.fft.fft(r_new)).real
@@ -40,7 +40,7 @@ def preconditioned_conjugate_gradient(A: np.ndarray, b: np.ndarray, precondition
         z = z_new
     print("Warning: Solution did not converge after {} iterations".format(max_iterations))
     print("Best approximation obtained within tolerance.")
-    print("Elapsed time:", time.time() - start_time, "s")
+    print("Elapsed time:", time.perf_counter() - start_time, "s")
     return x
 
 

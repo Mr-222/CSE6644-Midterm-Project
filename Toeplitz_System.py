@@ -24,7 +24,7 @@ def generate_power_decay_system(n: int, p: np.float64) -> np.ndarray:
     return A
 
 
-def generate_FFT_system(n: int, p) -> np.ndarray:
+def generate_FFT_system(n: int) -> np.ndarray:
     """
         A_n = [
         a_0, a_{-1}, ..., a_{2 - n}, a_{1 - n},

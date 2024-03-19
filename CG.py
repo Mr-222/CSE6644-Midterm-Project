@@ -3,7 +3,7 @@ import time
 
 
 def conjugate_gradient(A: np.ndarray, b: np.ndarray, max_iterations=10000, tol=1e-6) -> np.ndarray:
-    start_time = time.time()
+    start_time = time.perf_counter()
     x = np.zeros_like(b, dtype=np.float64)
     r = b - A @ x
     p = r.copy()
@@ -18,12 +18,12 @@ def conjugate_gradient(A: np.ndarray, b: np.ndarray, max_iterations=10000, tol=1
         r_new = r - alpha * q
         if np.linalg.norm(r_new) / r0_norm < tol:
             print("Number of iterations:", j + 1)
-            print("Elapsed time:", time.time() - start_time, "s")
+            print("Elapsed time:", time.perf_counter() - start_time, "s")
             return x
         beta = np.dot(r_new, r_new) / np.dot(r, r)
         p = r_new + beta * p
         r = r_new
     print("Warning: Solution did not converge after {} iterations".format(max_iterations))
     print("Best approximation obtained within tolerance.")
-    print("Elapsed time:", time.time() - start_time, "s")
+    print("Elapsed time:", time.perf_counter() - start_time, "s")
     return x
