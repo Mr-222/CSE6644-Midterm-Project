@@ -1,2 +1,2 @@
-# CSE6230-Midterm-Project
+# CSE6644-Midterm-Project
  Preconditioned Conjugate Gradient methods for solving Toeplitz systems
